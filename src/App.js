@@ -52,7 +52,7 @@ const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
 export default function App() {
-  const [query, setQuery] = useState("interstellar");
+  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -72,7 +72,7 @@ export default function App() {
   }
 
   function handleDeleteMovie(id) {
-    setWatched((watched) => watched.filter(movies=> movies.imdbID !== id));
+    setWatched((watched) => watched.filter((movies) => movies.imdbID !== id));
   }
   useEffect(
     function () {
@@ -132,7 +132,10 @@ export default function App() {
           ) : (
             <>
               <WatchedListSummary watched={watched} />
-              <WatchedList handleDeleteMovie={handleDeleteMovie} watched={watched} />
+              <WatchedList
+                handleDeleteMovie={handleDeleteMovie}
+                watched={watched}
+              />
             </>
           )}
         </Box>
@@ -356,7 +359,7 @@ function Movie({ movie, handleSelectedMovie }) {
   );
 }
 
-function WatchedMovie({ movie,handleDeleteMovie }) {
+function WatchedMovie({ movie, handleDeleteMovie }) {
   return (
     <li key={movie.imdbID}>
       <img src={movie.poster} alt={`${movie.title} poster`} />
@@ -375,7 +378,12 @@ function WatchedMovie({ movie,handleDeleteMovie }) {
           <span>{movie.runtime} min</span>
         </p>
 
-        <button className="btn-delete" onClick={()=> handleDeleteMovie(movie.imdbID)}>X</button>
+        <button
+          className="btn-delete"
+          onClick={() => handleDeleteMovie(movie.imdbID)}
+        >
+          X
+        </button>
       </div>
     </li>
   );
